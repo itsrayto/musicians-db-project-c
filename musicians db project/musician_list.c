@@ -1,8 +1,8 @@
 #include "musician_list.h"
 
-void checkMemoryAlloc(MusicianPriceInstrument* node)
+void checkMemoryAlloc(void* ptr)
 {
-	if (node == NULL)
+	if (ptr == NULL)
 	{
 		printf("Memory allocation failed!\n");
 		exit(1);

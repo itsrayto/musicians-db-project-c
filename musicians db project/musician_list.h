@@ -18,7 +18,7 @@ typedef struct
 	MusicianPriceInstrument* tail;
 }MPIList;
 
-void checkMemoryAlloc(MusicianPriceInstrument* node);
+void checkMemoryAlloc(void* ptr);
 MusicianPriceInstrument* getListNode(MPIList* lst, int i);
 MusicianPriceInstrument* createNewListNode(unsigned short id, float price, MusicianPriceInstrument* next);
 bool isEmptyList(MPIList* lst);
