@@ -27,6 +27,15 @@
     <ClCompile Include="musician_list.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="utilities.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="concert_instruments_list.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="concerts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="instrument_tree.h">
@@ -36,6 +45,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="musician_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="concert_instruments_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="concerts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

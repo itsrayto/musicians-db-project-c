@@ -1,15 +1,13 @@
 #ifndef MUSICIAN_LIST_H
 #define MUSICIAN_LIST_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include "instrument_tree.h"
 
 typedef struct listNode
 {
 	unsigned short insId; // instrument ID
 	float price; // the price the musicians takes for this 
-	listNode* next;
+	struct listNode* next;
 } MusicianPriceInstrument;
 
 typedef struct
@@ -18,7 +16,7 @@ typedef struct
 	MusicianPriceInstrument* tail;
 }MPIList;
 
-void checkMemoryAlloc(void* ptr);
+void checkMemoryAllocaction(void* ptr);
 MusicianPriceInstrument* getListNode(MPIList* lst, int i);
 MusicianPriceInstrument* createNewListNode(unsigned short id, float price, MusicianPriceInstrument* next);
 bool isEmptyList(MPIList* lst);

@@ -19,7 +19,25 @@ typedef struct tree {
 	TreeNode* root;
 } InstrumentTree;
 
+
 int findInsId(InstrumentTree tree, char* instrument);
+
 int findInsIdHelper(TreeNode* root, char* instrument);
+
+void makeEmptyTree(InstrumentTree* tree);
+
+void Insert(InstrumentTree* pt, char* instrument, short int insID_counter);
+
+TreeNode* FindPlace(TreeNode* currentNode, char* instrument);
+
+bool isEmptyTree(InstrumentTree t);
+
+void buildInstrumentTree(InstrumentTree* tree, FILE* instruments);
+
+long int fileSize(FILE* fp);
+
+void checkFile(FILE* file);
+
+void checkMemoryAllocation(void* ptr);
 
 #endif // !INSTRUMENT_TREE_H

@@ -1,17 +1,9 @@
 #include "musician_list.h"
-
-void checkMemoryAlloc(void* ptr)
-{
-	if (ptr == NULL)
-	{
-		printf("Memory allocation failed!\n");
-		exit(1);
-	}
-}
+#include "instrument_tree.h"
 
 MusicianPriceInstrument* getListNode(MPIList* lst, int i)
 {
-	MusicianPriceInstrument* res;
+	MusicianPriceInstrument* res = lst->head;
 	int ind = 0;
 
 	if (i < 0)
@@ -33,7 +25,7 @@ MusicianPriceInstrument* createNewListNode(unsigned short id, float price, Music
 {
 	MusicianPriceInstrument* res;
 	res = (MusicianPriceInstrument*)malloc(sizeof(MusicianPriceInstrument));
-	checkMemoryAlloc(res);
+	checkMemoryAllocation(res);
 	res->insId = id;
 	res->price = price;
 	res->next = next;
