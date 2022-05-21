@@ -89,7 +89,7 @@ char* scanConcertDetailsToStr(int* lenght)
 void getInstrumentDetails(Concert* concert, int* charsRead, char* concertDetails, InstrumentTree tree)
 {
 	Concert pConcert = *concert;
-	char* instrumentName, tempInstName[MAX_INS_LEN];
+	char* instrumentName, tempInstName[MAX_LEN];
 	int num, importance, insID, tempCharsRead, pCharsRead = *charsRead;
 
 

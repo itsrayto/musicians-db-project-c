@@ -10,6 +10,14 @@ typedef struct
 	MPIList instruments; // list of the instruments the musicians plays
 } Musician;
 
-Musician*** createMusicianCollection(Musician* musicianGroup, int numOfMusicians, int numOfInstruments, int* musiciansPerIns, int** indArray);
+Musician*** createMusicianCollection(Musician* musicianGroup, int numOfMusicians, int numOfInstruments, int* musiciansPerIns, int* indArray);
+
+Musician* createMusicainGroup(FILE* data, InstrumentTree tree, int numOfInstruments, int** musiciansPerIns, int* size);
+
+Musician* memoryAllocations(Musician* arr, int* physicalSize, int logicalSize);
+
+char** getNames(char* line, int index, InstrumentTree tree, char* symbols, char** newLine);
+
+MPIList getInstruments(char* line, char* symbols, InstrumentTree tree, int numOfInstruments, int* musiciansPerIns);
 
 #endif // !MUSICIAN_H

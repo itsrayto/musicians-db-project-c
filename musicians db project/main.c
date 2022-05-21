@@ -7,17 +7,38 @@
 
 void main(int argc, char* argv[])
 {
-	FILE* instruments = fopen(argv[1], "r");
+	FILE* instruments = fopen(argv[1], "r"), * Musicians = fopen(argv[2], "r");
 	InstrumentTree tree;
 	ConcertsArray concerts;
+	int numOfMusicians, numOfIns;
+	Musician* musicianGroup; //question 3
+	int* musiciansPerIns; 
+	int* indArray; 
+	Musician*** musicianCollection;
+
+
+	checkFile(instruments);
+	checkFile(Musicians);
 
 	/* question 1 */
-	checkFile(instruments);
 	makeEmptyTree(&tree);
 
-	buildInstrumentTree(&tree, instruments);
+	numOfIns = buildInstrumentTree(&tree, instruments); //add numOfIns
 	fclose(instruments);
 
+	/* question 3 */
+	musicianGroup = createMusicainGroup(Musicians, tree, numOfIns, &musiciansPerIns, &numOfMusicians);
+	/* need to free memory allocations inside */
+
+
+
+	/* question 4 */
+	indArray = (int*)malloc(sizeof(int) * numOfIns);
+	checkMemoryAllocation(indArray);
+	musicianCollection = createMusicianCollection(musicianGroup, numOfMusicians, numOfIns, musiciansPerIns, indArray);
+
+
 	/* question 5 */
-	concerts.arrOfConcerts = getConcertDetails(tree, &concerts.size);
+	/*concerts.arrOfConcerts = getConcertDetails(tree, &concerts.size);*/
+	/* add stuff for 5 */
 }

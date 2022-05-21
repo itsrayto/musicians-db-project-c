@@ -8,9 +8,12 @@ int findInsId(InstrumentTree tree, char* instrument)
 
 int findInsIdHelper(TreeNode* root, char* instrument)
 {
+	int side;
+
 	if (root == NULL) // if empty tree
 		return -1;
-	int side = strcmp(root->instrument, instrument);
+
+	side = strcmp(root->instrument, instrument);
 
 	if (side == 0) // if the root is with the requested instrument
 		return root->insId;
@@ -82,9 +85,9 @@ bool isEmptyTree(InstrumentTree t)
 }
 
 /* builds an binary search tree of instruments based on a given file */
-void buildInstrumentTree(InstrumentTree* tree, FILE* instruments)
+int buildInstrumentTree(InstrumentTree* tree, FILE* instruments)
 {
-	char str[MAX_INS_LEN];
+	char str[MAX_LEN];
 	short int insID_counter = 0;
 	long int fSize = fileSize(instruments);
 
@@ -97,4 +100,6 @@ void buildInstrumentTree(InstrumentTree* tree, FILE* instruments)
 		insID_counter++;
 	}
 	Insert(tree, str, insID_counter);
+
+	return insID_counter;
 }
