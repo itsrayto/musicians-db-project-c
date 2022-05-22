@@ -12,8 +12,7 @@ void main(int argc, char* argv[])
 	ConcertsArray concerts;
 	int numOfMusicians, numOfIns;
 	Musician* musicianGroup; //question 3
-	int* musiciansPerIns; 
-	int* indArray; 
+	int* musiciansPerIns;
 	Musician*** musicianCollection;
 
 
@@ -29,16 +28,15 @@ void main(int argc, char* argv[])
 	/* question 3 */
 	musicianGroup = createMusicainGroup(Musicians, tree, numOfIns, &musiciansPerIns, &numOfMusicians);
 	/* need to free memory allocations inside */
-
+	// add docu
 
 
 	/* question 4 */
-	indArray = (int*)malloc(sizeof(int) * numOfIns);
-	checkMemoryAllocation(indArray);
-	musicianCollection = createMusicianCollection(musicianGroup, numOfMusicians, numOfIns, musiciansPerIns, indArray);
+	musicianCollection = createMusicianCollection(musicianGroup, numOfMusicians, numOfIns, musiciansPerIns);
 
 
 	/* question 5 */
 	/*concerts.arrOfConcerts = getConcertDetails(tree, &concerts.size);*/
 	/* add stuff for 5 */
+	// use musicians per ins
 }

@@ -27,6 +27,7 @@ Musician* createMusicainGroup(FILE* data, InstrumentTree tree, int numOfInstrume
 	}
 	*musiciansPerIns = pMusiciansPerIns;
 	*size = logicalSize;
+	return res;
 }
 
 
@@ -114,13 +115,14 @@ MPIList getInstruments(char* line, char* symbols, InstrumentTree tree, int numOf
 }
 
 // creates a two dimensional array, where each row is an array of all the musicians that play a specific instrument
-Musician*** createMusicianCollection(Musician* musicianGroup, int numOfMusicians, int numOfInstruments, int* musiciansPerIns, int* indArray)
+Musician*** createMusicianCollection(Musician* musicianGroup, int numOfMusicians, int numOfInstruments, int* musiciansPerIns)
 {
 	Musician*** res;
 	res = (Musician***)malloc(sizeof(Musician**) * numOfInstruments); // allocates memory for the musician collection
 	checkMemoryAllocation(res);
 	int* indArr = (int*)malloc(sizeof(int) * numOfInstruments); // keeps record of the index of the last added musician in a specific instrument array
 	checkMemoryAllocation(indArr);
+	int ind;
 	
 	for (int i = 0; i < numOfInstruments; i++) // allocates memory for each instrument array
 	{
@@ -131,12 +133,14 @@ Musician*** createMusicianCollection(Musician* musicianGroup, int numOfMusicians
 
 	for (int i = 0; i < numOfMusicians; i++) // fills the musician collection
 	{
-		MusicianPriceInstrument* curr = musicianGroup[i].instruments.head;
+		MusicianPriceInstrument* currInsId = musicianGroup[i].instruments.head;
+		MusicianPriceInstrument* curr = musicianGroup[i].instruments.head->next;
+		ind = currInsId->insId;
 		while (curr != NULL) // add musician to all of the corresponding instrument arrays
 		{
-			int ind = curr->insId;
 			res[ind][indArr[ind]] = &musicianGroup[i];
 			indArr[ind]++;
+			curr = curr->next;
 		}
 	}
 	return res;

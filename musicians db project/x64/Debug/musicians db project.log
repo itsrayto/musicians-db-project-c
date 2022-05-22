@@ -1,3 +1,5 @@
 ﻿  main.c
-C:\Users\User\source\repos\advnced programming\Musicians project\musicians-db-project-c\musicians db project\main.c(12,16): warning C4101: 'concerts': unreferenced local variable
-  musicians db project.vcxproj -> C:\Users\User\source\repos\advnced programming\Musicians project\musicians-db-project-c\x64\Debug\musicians db project.exe
+C:\Users\Rachel\Documents\school\musicians-db-project-c\musicians db project\main.c(12,16): warning C4101: 'concerts': unreferenced local variable
+  musician.c
+  Generating Code...
+  musicians db project.vcxproj -> C:\Users\Rachel\Documents\school\musicians-db-project-c\x64\Debug\musicians db project.exe

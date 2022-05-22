@@ -10,7 +10,7 @@ typedef struct
 	MPIList instruments; // list of the instruments the musicians plays
 } Musician;
 
-Musician*** createMusicianCollection(Musician* musicianGroup, int numOfMusicians, int numOfInstruments, int* musiciansPerIns, int* indArray);
+Musician*** createMusicianCollection(Musician* musicianGroup, int numOfMusicians, int numOfInstruments, int* musiciansPerIns);
 
 Musician* createMusicainGroup(FILE* data, InstrumentTree tree, int numOfInstruments, int** musiciansPerIns, int* size);
 
