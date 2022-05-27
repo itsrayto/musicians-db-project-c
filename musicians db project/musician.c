@@ -1,14 +1,18 @@
-#include "musician.h"
 #include "instrument_tree.h"
+#include "musician.h"
+#include "utilities.h"
 
-
-Musician* createMusicainGroup(FILE* data, InstrumentTree tree, int numOfInstruments, int** musiciansPerIns, int* size)
+/* this function creates an array of Musician* and fills it */
+Musician** createMusicainGroup(FILE* data, InstrumentTree tree, int numOfInstruments, int** musiciansPerIns, int* size)
 {
-	Musician* res = (Musician*)malloc(sizeof(Musician));
+	Musician** res = (Musician**)malloc(sizeof(Musician*));
 	char line[MAX_LEN], symbols[SYMBOLS] = " ,.;:?!-\t'()[]{}<>~_";
 	long int fSize = fileSize(data);
 	int physicalSize = 1, logicalSize = 0;
 	int* pMusiciansPerIns = (int*)malloc(numOfInstruments * sizeof(int));
+
+	checkMemoryAllocation(res);
+	checkMemoryAllocation(musiciansPerIns);
 
 	for (int i = 0; i < numOfInstruments; i++)
 		pMusiciansPerIns[i] = 0;
@@ -20,45 +24,44 @@ Musician* createMusicainGroup(FILE* data, InstrumentTree tree, int numOfInstrume
 		fgets(line, (MAX_LEN - 1) * sizeof(char), data);
 
 		res = memoryAllocations(res, &physicalSize, logicalSize);
-		res[logicalSize].name = getNames(line, logicalSize, tree, symbols, &newLine);
-		res[logicalSize].instruments = getInstruments(newLine, symbols, tree, numOfInstruments, pMusiciansPerIns);
+		res[logicalSize]->name = getNames(line, logicalSize, tree, symbols, &newLine);
+		res[logicalSize]->instruments = getInstruments(newLine, symbols, tree, numOfInstruments, pMusiciansPerIns);
+		res[logicalSize]->taken = false;
 		
 		logicalSize++;
 	}
+	fclose(data);
 	*musiciansPerIns = pMusiciansPerIns;
 	*size = logicalSize;
 	return res;
 }
 
-
-
-Musician* memoryAllocations(Musician* arr, int* physicalSize, int logicalSize)
+/* this function allocates the basic memory needs of the given Musician* array */
+Musician** memoryAllocations(Musician** arr, int* physicalSize, int logicalSize)
 {
 	int pPhysicalSize = *physicalSize;
 
 	if (pPhysicalSize == logicalSize)
 	{
 		pPhysicalSize *= 2;
-		arr = (Musician*)realloc(arr, pPhysicalSize * sizeof(Musician));
+		arr = (Musician**)realloc(arr, pPhysicalSize * sizeof(Musician*));
 		checkMemoryAllocation(arr);
 	}
-
-	arr[logicalSize].name = (char**)malloc(sizeof(char*) * 2); //minimum of 2 words in a Musician's name
-	checkMemoryAllocation(arr[logicalSize].name);
+	arr[logicalSize] = (Musician*)malloc(sizeof(Musician));
+	checkMemoryAllocation(arr[logicalSize]);
 
 	*physicalSize = pPhysicalSize;
 	return arr;
 }
 
-
+/* this function extracts the musicians' names and stores them in the Musician* array */
 char** getNames(char* line, int index, InstrumentTree tree, char* symbols, char** newLine)
 {
 	int physicalSize = 2, logicalSize = 0;
-	char** res = (char**)malloc(2 * sizeof(char*)), * current;
+	char** res = (char**)malloc(2 * sizeof(char*)), * current; //minimum of 2 words in a Musician's name
 	bool firstInsFound = false;
 
 	current = strtok(line, symbols);
-	/* physical and logical for res!! */
 
 	while (current != NULL && !firstInsFound)
 	{
@@ -86,11 +89,11 @@ char** getNames(char* line, int index, InstrumentTree tree, char* symbols, char*
 	return res;
 }
 
-
+/* this function scans and stores a list with all of a given musician's instruments and prices */
 MPIList getInstruments(char* line, char* symbols, InstrumentTree tree, int numOfInstruments, int* musiciansPerIns)
 {
 	MPIList list;
-	unsigned short int insID; 
+	unsigned short insID; 
 	float price;
 	char* current;
 
@@ -114,8 +117,8 @@ MPIList getInstruments(char* line, char* symbols, InstrumentTree tree, int numOf
 	return list;
 }
 
-// creates a two dimensional array, where each row is an array of all the musicians that play a specific instrument
-Musician*** createMusicianCollection(Musician* musicianGroup, int numOfMusicians, int numOfInstruments, int* musiciansPerIns)
+/* creates a two dimensional array, where each row is an array of pointers of all the musicians that play a specific instrument */
+Musician*** createMusicianCollection(Musician** musicianGroup, int numOfMusicians, int numOfInstruments, int* musiciansPerIns)
 {
 	Musician*** res;
 	res = (Musician***)malloc(sizeof(Musician**) * numOfInstruments); // allocates memory for the musician collection
@@ -133,15 +136,22 @@ Musician*** createMusicianCollection(Musician* musicianGroup, int numOfMusicians
 
 	for (int i = 0; i < numOfMusicians; i++) // fills the musician collection
 	{
-		MusicianPriceInstrument* currInsId = musicianGroup[i].instruments.head;
-		MusicianPriceInstrument* curr = musicianGroup[i].instruments.head->next;
-		ind = currInsId->insId;
+		MusicianPriceInstrument* curr = musicianGroup[i]->instruments.head;
 		while (curr != NULL) // add musician to all of the corresponding instrument arrays
 		{
-			res[ind][indArr[ind]] = &musicianGroup[i];
+			ind = curr->insId;
+			res[ind][indArr[ind]] = musicianGroup[i];
 			indArr[ind]++;
 			curr = curr->next;
 		}
 	}
+	free(indArr);
 	return res;
+}
+
+/* this function resets all the musicians' "taken" field to be "false" */
+void resetMusucainsAvailabilityStatus(Musician** musicians, int numOfMusicians)
+{
+	for (int i = 0; i < numOfMusicians; i++)
+		musicians[i]->taken = false;
 }

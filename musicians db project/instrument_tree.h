@@ -28,7 +28,7 @@ int findInsIdHelper(TreeNode* root, char* instrument);
 
 void makeEmptyTree(InstrumentTree* tree);
 
-void Insert(InstrumentTree* pt, char* instrument, short int insID_counter);
+void Insert(InstrumentTree* pt, char* instrument,unsigned short insID_counter);
 
 TreeNode* FindPlace(TreeNode* currentNode, char* instrument);
 
@@ -36,10 +36,8 @@ bool isEmptyTree(InstrumentTree t);
 
 int buildInstrumentTree(InstrumentTree* tree, FILE* instruments);
 
-long int fileSize(FILE* fp);
+char* reverseFindInsId(InstrumentTree tree, unsigned short insId);
 
-void checkFile(FILE* file);
-
-void checkMemoryAllocation(void* ptr);
+char* reversFindInsIdHelper(TreeNode* root, unsigned short insId);
 
 #endif // !INSTRUMENT_TREE_H

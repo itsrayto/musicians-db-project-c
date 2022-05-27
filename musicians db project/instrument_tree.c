@@ -3,8 +3,13 @@
 /* searches the tree for the requested instrument and returns its ID */ 
 int findInsId(InstrumentTree tree, char* instrument)
 {
-	return findInsIdHelper(tree.root, instrument);
+	int res = findInsIdHelper(tree.root, instrument);
+	if (res == -1)
+		return res;
+	else
+		return (unsigned short)res;
 }
+
 
 int findInsIdHelper(TreeNode* root, char* instrument)
 {
@@ -35,13 +40,14 @@ void makeEmptyTree(InstrumentTree* tree)
 }
 
 /* Insert instrument into its proper place */
-void Insert(InstrumentTree* pt, char* instrument, short int insID_counter)
+void Insert(InstrumentTree* pt, char* instrument, unsigned short insID_counter)
 {
 	TreeNode* father;
 	TreeNode* new_instrument;
 
 
 	new_instrument = (TreeNode*)malloc(sizeof(TreeNode));
+	checkMemoryAllocation(new_instrument);
 	new_instrument->instrument = _strdup(instrument);
 	new_instrument->left = NULL;
 	new_instrument->right = NULL;
@@ -88,7 +94,7 @@ bool isEmptyTree(InstrumentTree t)
 int buildInstrumentTree(InstrumentTree* tree, FILE* instruments)
 {
 	char str[MAX_LEN];
-	short int insID_counter = 0;
+	unsigned short insID_counter = 0;
 	long int fSize = fileSize(instruments);
 
 	fscanf(instruments, "%s", str);
@@ -99,7 +105,32 @@ int buildInstrumentTree(InstrumentTree* tree, FILE* instruments)
 		fscanf(instruments, "%s", str);
 		insID_counter++;
 	}
-	Insert(tree, str, insID_counter);
+	Insert(tree, str, insID_counter++);
 
+	fclose(instruments);
 	return insID_counter;
+}
+
+/* this function searches the tree for the requested insID and returns its name */
+char* reverseFindInsId(InstrumentTree tree, unsigned short insId)
+{
+	return reversFindInsIdHelper(tree.root, insId);
+}
+
+
+char* reversFindInsIdHelper(TreeNode* root, unsigned short insId)
+{
+	int side;
+	char* leftIns, * rightIns;
+
+	if (root == NULL) // if empty tree
+		return NULL;
+
+	if (root->insId == insId)
+		return root->instrument;
+	leftIns = reversFindInsIdHelper(root->left, insId);
+	if (leftIns != NULL)
+		return leftIns;
+	rightIns = reversFindInsIdHelper(root->right, insId);
+	return rightIns;
 }

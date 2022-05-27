@@ -1,8 +1,7 @@
 #include "instrument_tree.h"
 #include "concert_instruments_list.h"
-#include "utilities.h"
 
-
+/* this function creates a new CIListNode */
 ConcertInstrument* createNewCIListNode(char importance, int inst, int num, ConcertInstrument* next)
 {
 	ConcertInstrument* res;
@@ -15,7 +14,7 @@ ConcertInstrument* createNewCIListNode(char importance, int inst, int num, Conce
 	return res;
 }
 
-
+/* this function checks if a CIList is an empty List */
 bool isEmptyCIList(CIList* lst)
 {
 	if (lst->head == NULL)
@@ -24,13 +23,13 @@ bool isEmptyCIList(CIList* lst)
 		return false;
 }
 
-
+/* this function make an empty CIList */
 void makeEmptyCIList(CIList* lst)
 {
 	lst->head = lst->tail = NULL;
 }
 
-
+/* this function inserts an existing node to the beginning of a CIList */
 void insertNodeToStartCIList(CIList* lst, ConcertInstrument* node)
 {
 	if (isEmptyCIList(lst))
@@ -46,14 +45,14 @@ void insertNodeToStartCIList(CIList* lst, ConcertInstrument* node)
 
 }
 
-
+/* this function inserts data to the beginning of a CIList */
 void insertDataToStartCIList(CIList* lst, char importance, int inst, int num)
 {
 	ConcertInstrument* newNode = createNewCIListNode(importance, inst, num, NULL);
 	insertNodeToStartCIList(lst, newNode);
 }
 
-
+/* this function inserts data to the end of a CIList */
 void insertDataToEndCIList(CIList* lst, char importance, int inst, int num)
 {
 	ConcertInstrument* newTail;
@@ -61,7 +60,7 @@ void insertDataToEndCIList(CIList* lst, char importance, int inst, int num)
 	insertNodeToEndList(lst, newTail);
 }
 
-
+/* this function inserts an existing node to the end of a CIList */
 void insertNodeToEndList(CIList* lst, ConcertInstrument* tail)
 {
 	if (isEmptyCIList(lst) == true)
@@ -72,19 +71,4 @@ void insertNodeToEndList(CIList* lst, ConcertInstrument* tail)
 		lst->tail = tail;
 	}
 	tail->next = NULL;
-}
-
-
-void freeCIList(CIList* lst) /* adjust to CIList */
-{
-	ConcertInstrument* curr;
-	curr = lst->head;
-
-	while (curr != NULL)
-	{
-		ConcertInstrument* tmp = curr->next;
-		free(curr);
-		curr = tmp;
-	}
-	free(lst);
 }

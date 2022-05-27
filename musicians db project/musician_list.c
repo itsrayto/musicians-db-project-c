@@ -1,26 +1,7 @@
-#include "musician_list.h"
 #include "instrument_tree.h"
+#include "musician_list.h"
 
-MusicianPriceInstrument* getListNode(MPIList* lst, int i)
-{
-	MusicianPriceInstrument* res = lst->head;
-	int ind = 0;
-
-	if (i < 0)
-		return NULL;
-
-	while (res != NULL || ind < i)
-	{
-		res = res->next;
-		ind++;
-	}
-
-	if (ind == i)
-		return res;
-	else
-		return NULL;
-}
-
+/* this function creates a new MPIListNode */
 MusicianPriceInstrument* createNewListNode(unsigned short id, float price, MusicianPriceInstrument* next)
 {
 	MusicianPriceInstrument* res;
@@ -32,6 +13,7 @@ MusicianPriceInstrument* createNewListNode(unsigned short id, float price, Music
 	return res;
 }
 
+/* this function check whether an MPIList is empty */
 bool isEmptyList(MPIList* lst)
 {
 	if (lst->head == NULL)
@@ -40,11 +22,13 @@ bool isEmptyList(MPIList* lst)
 		return false;
 }
 
+/* this function makes a given MPIList empty */
 void makeEmptyList(MPIList* lst)
 {
 	lst->head = lst->tail = NULL;
 }
 
+/* this function inserts a given MPIListNode to the start of an MPIList */
 void insertNodeToStartList(MPIList* lst, MusicianPriceInstrument* node)
 {
 	if(isEmptyList(lst))
@@ -60,34 +44,9 @@ void insertNodeToStartList(MPIList* lst, MusicianPriceInstrument* node)
 
 }
 
+/* this function inserts data to the start of an MPIList */
 void insertDataToStartList(MPIList* lst, unsigned short id, float price)
 {
 	MusicianPriceInstrument* newNode = createNewListNode(id, price, NULL);
 	insertNodeToStartList(lst, newNode);
-}
-
-void printList(MPIList* lst)
-{
-	MusicianPriceInstrument* curr;
-	curr = lst->head;
-
-	while (curr != NULL)
-	{
-		printf("instrument ID: %u, price: %.1f\n", curr->insId, curr->price);
-		curr = curr->next;
-	}
-}
-
-void freeList(MPIList* lst)
-{
-	MusicianPriceInstrument* curr;
-	curr = lst->head;
-
-	while (curr != NULL)
-	{
-		MusicianPriceInstrument* tmp = curr->next;
-		free(curr);
-		curr = tmp;
-	}
-	free(lst);
 }

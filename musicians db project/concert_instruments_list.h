@@ -32,6 +32,4 @@ void insertNodeToStartCIList(CIList* lst, ConcertInstrument* node);
 
 void insertNodeToEndList(CIList* lst, ConcertInstrument* tail);
 
-void freeCIList(CIList* lst);
-
 #endif // !CONCERT_INSTRUMENTS_LIST_H
